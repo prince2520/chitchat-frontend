@@ -1,0 +1,11 @@
+.category-btn{
+    padding: 0.25rem 0.5rem;
+    background: var(--white);
+    border: 3px solid var(--primary);
+    justify-self: flex-end;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    width: fit-content;
+    align-self: flex-end;
+}

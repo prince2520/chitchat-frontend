@@ -1,0 +1,26 @@
+.group-private-item{
+    display: flex;
+    column-gap: 1rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.group-private-item-right .group-name{
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.group-private-item .group-private-item-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.group-private-item-right .group-created{
+    font-size: 0.8rem;
+    align-self: flex-end;
+    font-weight: 500;
+    color: var(--text);
+}
