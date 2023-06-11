@@ -64,6 +64,17 @@
     .chat-page .chat-tab-container{
         display: none;
     }
+}
 
+::-webkit-scrollbar{
+    width: 0.5rem;
+}
 
+::-webkit-scrollbar-thumb{
+    border-radius: 0.25rem;
+    background-color: grey;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: var(--text);
 }

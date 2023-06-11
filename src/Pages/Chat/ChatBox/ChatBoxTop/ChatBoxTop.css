@@ -7,6 +7,11 @@
 
 }
 
+.chat-box-top .burger-menu-icon{
+    cursor: pointer;
+    display: none;
+}
+
 .chat-box-top .chat-description{
     display: flex;
     flex-direction: column;
@@ -39,7 +44,10 @@
     .chat-box-top{
         padding: 0.35rem 0.5rem;
         column-gap: 0.5rem;
-
     }
 
+
+    .chat-box-top .burger-menu-icon{
+        display: block;
+    }
 }

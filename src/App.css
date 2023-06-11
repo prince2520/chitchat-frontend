@@ -1,12 +1,14 @@
 :root {
   --background: #222831;
-  --container: #393E46;
+  --container: rgba(57, 62, 70, 0.7);
   --white: #ffff;
   --input: #E8F0FE;
   --text: #D4CFCF;
   --primary: #EE4C74;
   --link: #8AB4F8;
   --border: #61656B;
+  --error: #830B0B;
+  --success: #12670c;
 }
 
 .App {
@@ -79,6 +81,7 @@ label{
 }
 
 .image-edit-container .edit-btn{
+  cursor: pointer;
   position: absolute;
   bottom: 0;
   right: 1rem;
@@ -103,4 +106,9 @@ label{
     height: 100%;
     padding: 0;
   }
+}
+
+
+h3,p {
+  margin: 0;
 }

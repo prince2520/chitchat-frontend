@@ -13,7 +13,6 @@ form .login-heading{
     color: var(--white);
 }
 
-
 .login-form p{
     color: var(--text);
     font-weight: 400;
@@ -31,12 +30,28 @@ form .link-container{
 
 .link-container .link{
     color: var(--link);
+    text-decoration: none;
+    cursor: pointer;
 }
+
+.login-btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
 
 @media screen and (max-width: 800px) {
     form .login-heading{
         font-size: 1.8rem;
         font-weight: 600;
         color: var(--white);
+    }
+
+    .login-form{
+        position: relative;
+        top: -5rem;
     }
 }
