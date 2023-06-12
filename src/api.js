@@ -31,3 +31,13 @@ export const login = async (email, password) => {
 
     return result.json();
 }
+
+export const fetchUser = async (userId, token) => {
+    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/fetchUser?userId=${userId}`,{
+        headers:{
+            Authorization: 'Bearer ' + token
+        }
+    });
+
+    return result.json();
+}

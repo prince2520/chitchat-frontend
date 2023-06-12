@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from "react";
 import { useNavigate} from "react-router-dom";
-import {login, signup} from "../api";
+import {fetchUser, login, signup} from "../api";
 import {useDispatch} from "react-redux";
 import {AlertBoxActions} from "../store/alert";
+import {AuthActions} from "../store/user";
 
 
 const AuthContext = React.createContext({
@@ -22,6 +23,16 @@ export const AuthContextProvider = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const saveUserData = (result) =>{
+        dispatch(AuthActions.saveUserData({
+            username: result.userName,
+            email: result.email,
+            profileImageUrl: result.profileImageUrl,
+            status: result.Status,
+            groupList: result.joinRoom
+        }));
+    };
+
     useEffect(()=>{
         const localToken  = localStorage.getItem('token');
         setToken(localToken);
@@ -33,7 +44,12 @@ export const AuthContextProvider = (props) => {
             setIsAuth(false)
             logoutHandler();
             return
-        }
+        };
+
+        fetchUser(localUserId, localToken).then(result=>{
+            saveUserData(result.user);
+        }).catch(err=>console.log(err));
+
         const remainingMilliseconds = new Date(localExpiryDate).getTime() - new Date().getTime();
         autoLogout(remainingMilliseconds);
         setIsAuth(true);
@@ -57,13 +73,17 @@ export const AuthContextProvider = (props) => {
 
     const loginHandler = (email,password) => {
         login(email, password).then(result=>{
+            console.log(result)
+
             if(result.success){
+                saveUserData(result.user);
+
                 setToken(result.token);
-                setUserId(result.userId);
+                setUserId(result.user._id);
                 setIsAuth(true);
 
                 localStorage.setItem('token',result.token)
-                localStorage.setItem('userId',result.userId);
+                localStorage.setItem('userId',result.user._id);
 
                 const remainingMilliseconds = 60 * 60 * 1000;
                 const expiryDate = new Date (
@@ -79,7 +99,6 @@ export const AuthContextProvider = (props) => {
         });
     }
 
-    //logout Function added
     const logoutHandler = () => {
         setToken(null)
         setIsAuth(false);

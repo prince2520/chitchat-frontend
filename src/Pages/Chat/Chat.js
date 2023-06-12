@@ -5,7 +5,6 @@ import  './Chat.css';
 import Overlay from "../../Helper/Overlay/Overlay";
 import {useSelector} from "react-redux";
 const Chat = () => {
-
     const showOverlay = useSelector(state => state.overlay?.showOverlay)
 
     return (
