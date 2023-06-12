@@ -1,26 +1,21 @@
 import './MyProfile.css';
 import {Icon} from "@iconify/react";
 import ImageContainer from "../../../../Helper/ImageContainer/ImageContainer";
+import Dropdown from "../../../../Helper/Dropdown/Dropdown";
+import {useDispatch, useSelector} from "react-redux";
+import {HelperActions} from "../../../../store/helper";
 
 const MyProfile = () => {
+    const showDropdown = useSelector(state => state.helper.showDropdown);
+    const dispatch = useDispatch();
+
     return (
         <div className={'my-profile-container border'}>
             <ImageContainer/>
-            <Icon icon="gridicons:dropdown" style={{color:'var(--text)', fontSize:'3rem'}}/>
-            <div className={'menu-container border box-shadow'}>
-                <span>
-                    Create a Group
-                </span>
-                <span>
-                    Join a Group
-                </span>
-                <span>
-                    Edit Profile
-                </span>
-                <span>
-                    Logout
-                </span>
-            </div>
+            <span  onClick={()=>dispatch(HelperActions.dropDownHandler(!showDropdown))}>
+                <Icon icon="gridicons:dropdown" style={{color:'var(--text)', fontSize:'3rem', cursor:'pointer'}}/>
+            </span>
+            {showDropdown && <Dropdown/>}
         </div>
     );
 };

@@ -1,11 +1,10 @@
-import './Authentication.css';
-import SignUp from "./SignUp/SignUp";
-import Login from "./Login/Login";
+import {Outlet} from "react-router-dom";
 
+import './Authentication.css';
 const Authentication = () => {
     return (
         <div className='authentication-page border box-shadow'>
-            <SignUp/>
+            <Outlet/>
         </div>
     );
 };

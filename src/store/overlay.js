@@ -10,7 +10,6 @@ const OverlaySlice = createSlice({
     reducers: {
         closeOverlayHandler(state) {
             state.showOverlay = false;
-            console.log('Hello')
         },
         openOverlayHandler(state){
             state.showOverlay = true;

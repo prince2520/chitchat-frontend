@@ -1,9 +1,9 @@
 import './Button.css';
 const Button = (props) => {
     return(
-        <div className="button-container">
+        <button type={'submit'} className="button-container">
             {props.title}
-        </div>
+        </button>
     );
 };
 
