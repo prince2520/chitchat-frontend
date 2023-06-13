@@ -41,3 +41,16 @@ export const fetchUser = async (userId, token) => {
 
     return result.json();
 }
+
+export const saveProfile = async (token, data) => {
+    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/saveProfile`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+        },
+        body: JSON.stringify(data)
+    })
+
+    return result.json();
+};
