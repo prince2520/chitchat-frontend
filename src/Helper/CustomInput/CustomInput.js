@@ -1,7 +1,6 @@
 import './CustomInput.css';
 import {Icon} from "@iconify/react";
 const CustomInput = (props) => {
-    console.log(props)
     return (
         <div className='email-container'>
             <label htmlFor="email">{props.label}</label>

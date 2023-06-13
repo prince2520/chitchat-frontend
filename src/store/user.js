@@ -15,8 +15,6 @@ const UserSlice = createSlice({
     initialState: initialUserState,
     reducers: {
         saveUserData(state, action){
-            console.log(action.payload)
-
             state.username = action.payload.username ?  action.payload.username : state.username;
             state.email = action.payload.email ? action.payload.email :  state.email;
             state.status = action.payload.status ?  action.payload.status : state.status;
