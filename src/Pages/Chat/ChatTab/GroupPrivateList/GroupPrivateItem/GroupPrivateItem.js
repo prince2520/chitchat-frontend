@@ -1,14 +1,14 @@
 import './GroupPrivateItem.css';
 import ImageContainer from "../../../../../Helper/ImageContainer/ImageContainer";
-const GroupPrivateItem = () => {
+const GroupPrivateItem = ({result}) => {
     return (
         <div className="group-private-item border">
             <div className='group-private-item-left'>
-                <ImageContainer/>
+                <ImageContainer src={result.groupImageUrl}/>
             </div>
             <div className='group-private-item-right'>
                 <div className='group-name'>
-                    ESPORTS GAMING COMMUNITY
+                    {result.groupName}
                 </div>
                 <div className='group-created'>
                     Created At -  Aug, 2021

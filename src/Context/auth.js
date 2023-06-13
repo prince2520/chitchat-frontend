@@ -47,6 +47,7 @@ export const AuthContextProvider = (props) => {
         };
 
         fetchUser(localUserId, localToken).then(result=>{
+            console.log(result.user.joinRoom)
             saveUserData(result.user);
         }).catch(err=>console.log(err));
 

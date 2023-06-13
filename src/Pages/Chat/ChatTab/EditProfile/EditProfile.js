@@ -38,11 +38,9 @@ const EditProfile = () => {
             username: username,
             status: status,
         };
-
         if (profileImageUrl) {
             data.profileImageUrl = profileImageUrl;
         }
-
         return saveProfile(authCtx.token, data);
     };
 
