@@ -77,3 +77,14 @@ export const createGroup = async (token, groupName, username, userId, groupUrl )
 
     return result.json();
 }
+
+
+export const searchUserHandler = async (token, email) => {
+    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/fetchUser?email=${email}`,{
+        headers:{
+            Authorization: 'Bearer ' + token
+        }
+    });
+
+    return result.json();
+}

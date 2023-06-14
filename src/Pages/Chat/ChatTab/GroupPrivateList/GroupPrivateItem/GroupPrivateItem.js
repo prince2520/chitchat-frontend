@@ -2,7 +2,7 @@ import './GroupPrivateItem.css';
 import ImageContainer from "../../../../../Helper/ImageContainer/ImageContainer";
 const GroupPrivateItem = ({result}) => {
     return (
-        <div className="group-private-item border">
+        <div className="group-private-item  border">
             <div className='group-private-item-left'>
                 <ImageContainer src={result.groupImageUrl}/>
             </div>
