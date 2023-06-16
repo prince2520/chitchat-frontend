@@ -5,6 +5,7 @@ import ChatBoxBottom from "./ChatBoxBottom/ChatBoxBottom";
 import './ChatBox.css';
 
 const ChatBox = () => {
+
     return (
         <div className="chat-box">
             <ChatBoxTop/>

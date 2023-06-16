@@ -6,12 +6,14 @@ import React, {useContext} from "react";
 import Authentication from "./Pages/Authentication/Authentication";
 import Login from "./Pages/Authentication/Login/Login";
 import SignUp from "./Pages/Authentication/SignUp/SignUp";
-import GroupPrivateList from "./Pages/Chat/ChatTab/GroupPrivateList/GroupPrivateList";
+import GroupList from "./Pages/Chat/ChatTab/GroupPrivateList/GroupList/GroupList";
 import EditProfile from "./Pages/Chat/ChatTab/EditProfile/EditProfile";
 import JoinGroup from "./Pages/Chat/ChatTab/JoinGroup/JoinGroup";
 import CreateGroup from "./Pages/Chat/ChatTab/CreateGroup/CreateGroup";
 import AlertBox from "./Helper/AlertBox/AlertBox";
 import {useSelector} from "react-redux";
+import PrivateList from "./Pages/Chat/ChatTab/GroupPrivateList/PrivateList/PrivateList";
+import GroupPrivateList from "./Pages/Chat/ChatTab/GroupPrivateList/GroupPrivateList";
 
 
 function App() {
@@ -27,12 +29,13 @@ function App() {
                     <Route path='signup' element={<SignUp/>}/>
                     <Route path='' element={<Navigate to={'login'}/>}/>
                 </Route>}
-                {authCtx?.isAuth && <Route path='/chat' element={<Chat/>}>
-                    <Route path='group-chat' element={<GroupPrivateList/>}/>
+                {authCtx?.isAuth && <Route path='/' element={<Chat/>}>
+                    <Route path='chat' element={<GroupPrivateList/>}/>
                     <Route path='edit-profile' element={<EditProfile/>}/>
                     <Route path='join-group' element={<JoinGroup/>}/>
                     <Route path='create-group' element={<CreateGroup/>}/>
-                    <Route path='' element={<Navigate to={'group-chat'}/>}/>
+                    <Route path='private-chat' element={<PrivateList/>}/>
+                    <Route path='' element={<Navigate to={'chat'}/>}/>
                 </Route>}
             </Routes>
         </div>

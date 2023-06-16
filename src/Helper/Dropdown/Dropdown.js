@@ -22,7 +22,7 @@ const Dropdown = () => {
             <div className={'menu-close'}>
                 <Icon onClick={() => dispatch(HelperActions.dropDownHandler(false))} icon="iconamoon:close-fill"/>
             </div>
-            <div className={'menu-option'} onClick={() => navigateHandler('group-chat')}>
+            <div className={'menu-option'} onClick={() => navigateHandler('chat')}>
                 <Icon icon="material-symbols:chat"/>
                 <span>Chat</span>
             </div>

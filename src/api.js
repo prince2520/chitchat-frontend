@@ -78,7 +78,6 @@ export const createGroup = async (token, groupName, username, userId, groupUrl )
     return result.json();
 }
 
-
 export const searchUserHandler = async (token, email) => {
     let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/fetchUser?email=${email}`,{
         headers:{
@@ -88,3 +87,32 @@ export const searchUserHandler = async (token, email) => {
 
     return result.json();
 }
+
+export const fetchPrivateUserHandler = async (userId, token) => {
+    let result =  await fetch(`${process.env.REACT_APP_SERVER_URL}/private/fetchPrivateUser?userId=${userId}`,{
+        headers:{
+            Authorization: 'Bearer ' + token
+        }
+    });
+
+    return result.json();
+}
+
+
+export const addUserInPrivateChat = async (token, senderId, receiverId) => {
+    const response  = await fetch(`${process.env.REACT_APP_SERVER_URL}/private/addPrivateChat`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+        },
+        body: JSON.stringify({
+            senderId: senderId,
+            receiverId: receiverId,
+            token: token,
+        })
+    });
+
+    return response.json();
+}
+

@@ -1,8 +1,9 @@
-import './GroupPrivateItem.css';
-import ImageContainer from "../../../../../Helper/ImageContainer/ImageContainer";
-const GroupPrivateItem = ({result}) => {
+import ImageContainer from "../../../../../../Helper/ImageContainer/ImageContainer";
+const GroupListItem = ({result}) => {
+
+
     return (
-        <div className="group-private-item  border">
+        <div className={`group-private-item border`} onClick={() => {}}>
             <div className='group-private-item-left'>
                 <ImageContainer src={result.groupImageUrl}/>
             </div>
@@ -18,4 +19,4 @@ const GroupPrivateItem = ({result}) => {
     );
 };
 
-export default GroupPrivateItem;
+export default GroupListItem;

@@ -29,7 +29,8 @@ export const AuthContextProvider = (props) => {
             email: result.email,
             profileImageUrl: result.profileImageUrl,
             status: result.Status,
-            groupList: result.joinRoom
+            groupList: result.joinRoom,
+            privateList: result.privateUser
         }));
     };
 
@@ -47,7 +48,6 @@ export const AuthContextProvider = (props) => {
         };
 
         fetchUser(localUserId, localToken).then(result=>{
-            console.log(result.user.joinRoom)
             saveUserData(result.user);
         }).catch(err=>console.log(err));
 
@@ -64,6 +64,7 @@ export const AuthContextProvider = (props) => {
 
     const signUpHandler = (userName,email,password) => {
         signup(userName, email, password).then(result=>{
+            console.log(result)
             if (result.success){
                 navigate('/login');
             }else {
@@ -74,13 +75,12 @@ export const AuthContextProvider = (props) => {
 
     const loginHandler = (email,password) => {
         login(email, password).then(result=>{
-            console.log(result)
 
             if(result.success){
                 saveUserData(result.user);
 
                 setToken(result.token);
-                setUserId(result.user._id);
+                setUserId(result.user?._id);
                 setIsAuth(true);
 
                 localStorage.setItem('token',result.token)
