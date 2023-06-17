@@ -1,9 +1,27 @@
 import ImageContainer from "../../../../../../Helper/ImageContainer/ImageContainer";
+import {useDispatch, useSelector} from "react-redux";
+import {ChatActions} from "../../../../../../store/chat";
+import {joinGroupHandler} from "../../../../../../socket";
+import {categoryState} from "../../../../../../common";
 const GroupListItem = ({result}) => {
+    const dispatch =useDispatch();
+    const chat = useSelector(state => state.chat);
+
+    const selectedGroup = () => {
+        joinGroupHandler(result._id);
+
+        let data = {
+            type: categoryState[0],
+            _id: result._id,
+            photo: result.groupImageUrl,
+            name: result.groupName
+        }
+        dispatch(ChatActions.selectedChatBox(data));
+    };
 
 
     return (
-        <div className={`group-private-item border`} onClick={() => {}}>
+        <div className={`group-private-item ${(result._id === chat._id) && 'group-selected'} border`} onClick={() => {selectedGroup()}}>
             <div className='group-private-item-left'>
                 <ImageContainer src={result.groupImageUrl}/>
             </div>

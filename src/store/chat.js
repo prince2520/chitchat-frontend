@@ -5,6 +5,7 @@ const initialChatState = {
     type: '',
     _id: '',
     photo: '',
+    status: '',
     createdBy : '',
     name: '',
     messages:[]
@@ -19,11 +20,14 @@ const ChatSlice = createSlice({
             state._id = action.payload._id;
             state.photo = action.payload.photo;
             state.name = action.payload.name;
+            state.status = action.payload.status ? action.payload.status : null;
             state.createdBy = action.payload.createdBy ? action.payload.createdBy : null;
-            state.message = action.payload.message ? action.payload.message : [];
+            state.messages = action.payload.messages ? action.payload.messages : [];
             state.selected = true;
+        },
+        saveChatMessage(state, action){
+            state.messages = [action.payload, ...state.messages]
         }
-
     }
 });
 

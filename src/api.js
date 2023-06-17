@@ -116,3 +116,19 @@ export const addUserInPrivateChat = async (token, senderId, receiverId) => {
     return response.json();
 }
 
+
+export const joinGroupHandler = async (token, group_name, userId) => {
+    let result = fetch(`${process.env.REACT_APP_SERVER_URL}/group/joinGroup`,{
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            Authorization: 'Bearer ' + token
+        },
+        body:JSON.stringify({
+            groupName: group_name,
+            userId: userId
+        })
+    });
+
+    return result.json();
+}

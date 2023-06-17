@@ -7,7 +7,6 @@ const initialUserState = {
     profileImageUrl: '',
     groupList: [],
     privateList: []
-
 };
 
 const UserSlice = createSlice({

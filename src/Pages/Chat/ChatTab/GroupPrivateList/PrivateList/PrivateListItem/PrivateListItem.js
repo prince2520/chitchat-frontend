@@ -1,6 +1,7 @@
 import ImageContainer from "../../../../../../Helper/ImageContainer/ImageContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {ChatActions} from "../../../../../../store/chat";
+import {categoryState} from "../../../../../../common";
 
 
 const PrivateListItem = ({result}) => {
@@ -9,10 +10,11 @@ const PrivateListItem = ({result}) => {
 
     const selectedPrivateUser = () => {
         dispatch(ChatActions.selectedChatBox({
-            type: 'Private',
+            type: categoryState[1],
             _id: result._id,
             photo: result.profileImageUrl,
-            name: result.userName
+            name: result.userName,
+            status: result.Status
         }))
     };
 
