@@ -132,3 +132,46 @@ export const joinGroupHandler = async (token, group_name, userId) => {
 
     return result.json();
 }
+
+export const sendGroupMessageHandler = async (token, message, roomName, username ) => {
+    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/message/createMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+        },
+        body: JSON.stringify({
+            message: message,
+            roomName: roomName,
+            userName: username
+        })
+    });
+
+    return result.json();
+}
+
+export const fetchGroupMessages = async (groupName, token) => {
+    let res = await fetch(`${process.env.REACT_APP_SERVER_URL}/group/fetchRoomMessages?roomName=${groupName}`, {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    });
+    return res.json();
+}
+
+export const sendPrivateMessageHandler = async (token, sender, receiver, message) => {
+    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/private/createPersonalMessage`, {
+        method: 'POST',
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            senderName: sender,
+            receiverName: receiver,
+            message: message
+        })
+    });
+
+    return result.json();
+}

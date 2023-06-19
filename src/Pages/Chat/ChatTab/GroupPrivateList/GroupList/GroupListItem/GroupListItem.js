@@ -1,15 +1,12 @@
 import ImageContainer from "../../../../../../Helper/ImageContainer/ImageContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {ChatActions} from "../../../../../../store/chat";
-import {joinGroupHandler} from "../../../../../../socket";
 import {categoryState} from "../../../../../../common";
 const GroupListItem = ({result}) => {
     const dispatch =useDispatch();
     const chat = useSelector(state => state.chat);
 
     const selectedGroup = () => {
-        joinGroupHandler(result._id);
-
         let data = {
             type: categoryState[0],
             _id: result._id,

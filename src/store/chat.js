@@ -26,7 +26,14 @@ const ChatSlice = createSlice({
             state.selected = true;
         },
         saveChatMessage(state, action){
-            state.messages = [action.payload, ...state.messages]
+            console.log(action.payload)
+            if(!state.messages.find(res=>res.messageId === action.payload.messageId)){
+                state.messages = [action.payload, ...state.messages]
+            }
+
+        },
+        saveFetchChatMessage(state, action) {
+            state.messages = action.payload.reverse()
         }
     }
 });

@@ -11,7 +11,6 @@ const Message = ({myMsg, message, profileImgUrl, username}) => {
                 {!myMsg && <span className={'username'}>{username}</span>}
                 <span className={'msg'}>{message}</span>
             </div>
-
         </div>
     );
 };
