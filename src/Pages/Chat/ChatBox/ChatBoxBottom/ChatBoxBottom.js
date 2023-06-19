@@ -24,36 +24,35 @@ const ChatBoxBottom = () => {
 
         if (chat.type === categoryState[0]) {
             sendGroupMessageHandler(authCtx.token, message, chat.name, user.username)
-                .then(res=>{
-                    console.log('result', res.result._id);
-                    sendGroupMessage(
-                        res.result._id,
-                        chat._id,
-                        message,
-                        user.username,
-                        user.profileImageUrl);
+                .then((res)=>{
+                    let users, groupData;
+
+                    users = chat.users;
+                    groupData = {
+                        sender_id : authCtx?.userId,
+                        users: users,
+
+                        messageData: {
+                            messageId: res.result._id,
+                            groupId: chat._id,
+                            username: user.username,
+                            message: message,
+                            profileImageUrl: user.profileImageUrl
+                        }
+                    }
+                    dispatch(ChatActions.saveChatMessage({
+                        groupId: chat._id,
+                        messageId:  res.result._id,
+                        username: user.username,
+                        message: message,
+                        profileImageUrl: user.profileImageUrl
+                    }));
+                    sendGroupMessage(groupData);
                 })
                 .catch(err=>console.log(err));
 
-            dispatch(ChatActions.saveChatMessage({
-                username: user.username,
-                message: message,
-                profileImageUrl: user.profileImageUrl
-            }));
+
         }
-        // else {
-        //
-        //     sendPrivateMessage(user.username, chat.name, message, user.profileImageUrl);
-        //     sendPrivateMessageHandler(authCtx.token, user.username, chat.name, message)
-        //         .then(res=>console.log(res))
-        //         .catch(err => console.log(err))
-        //
-        //     dispatch(ChatActions.saveChatMessage({
-        //         username: user.username,
-        //         message: message,
-        //         profileImageUrl: user.profileImageUrl
-        //     }));
-        // }
         inputRef.current.value = '';
     };
 

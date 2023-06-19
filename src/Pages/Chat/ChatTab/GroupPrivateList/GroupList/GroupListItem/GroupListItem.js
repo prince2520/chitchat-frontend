@@ -11,9 +11,12 @@ const GroupListItem = ({result}) => {
             type: categoryState[0],
             _id: result._id,
             photo: result.groupImageUrl,
-            name: result.groupName
+            name: result.groupName,
+            users: result.user
         }
-        dispatch(ChatActions.selectedChatBox(data));
+        if(result){
+            dispatch(ChatActions.selectedChatBox(data));
+        }
     };
 
 

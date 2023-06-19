@@ -2,7 +2,6 @@ import './ChatBoxMiddle.css';
 import Message from "./Message/Message";
 
 import {useSelector} from "react-redux";
-import {useEffect} from "react";
 
 const ChatBoxMiddle = () => {
     const messages = useSelector(state => state.chat.messages);

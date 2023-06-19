@@ -2,14 +2,14 @@ import io from 'socket.io-client';
 
 let socket;
 
-export const initiateSocket = (userName) => {
+export const initiateSocket = (userId) => {
     socket = io(process.env.REACT_APP_SERVER_URL, {transports: ['websocket', 'polling', 'flashsocket']});
-    socket.emit('user_connected', userName);
+    socket.emit('user_connected', userId);
 }
 
 export const joinGroupHandler = (groupId) => {
     if(socket && groupId){
-        socket.emit('join', {groupId});
+        socket.emit('join_group', {groupId});
     }
 }
 
@@ -19,9 +19,9 @@ export  const  leaveGroupHandler = (groupId) => {
         socket.emit('leave_room', {groupId});
     }
 }
-export const sendGroupMessage = (messageId,groupId,message,userName, profileImageUrl) => {
+export const sendGroupMessage = (groupData) => {
     if(socket){
-        socket.emit('sendGroupMsg',{messageId,groupId,message,userName,profileImageUrl})
+        socket.emit('send_group_message',{groupData});
     }
 };
 
@@ -49,15 +49,15 @@ export const getGroupMessage = (cb) => {
     if(!socket){
         return true
     }else{
-        socket.on('groupMsg',({ messageId, groupId, message,userName, profileImageUrl})=>{
-            return cb(null,{ messageId, groupId, message,userName, profileImageUrl})
+        socket.on('received_group_message',({messageData})=>{
+            return cb(null,{messageData})
         })
     };
 }
 
-export const disconnectSocket = () => {
+export const disconnectSocket = (userId) => {
     if(socket){
-        socket.disconnect();
+        socket.disconnect(userId);
     }
 }
 

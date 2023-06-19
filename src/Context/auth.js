@@ -24,6 +24,7 @@ export const AuthContextProvider = (props) => {
     const dispatch = useDispatch();
 
     const saveUserData = (result) =>{
+        console.log(result)
         dispatch(AuthActions.saveUserData({
             username: result.userName,
             email: result.email,
@@ -64,7 +65,6 @@ export const AuthContextProvider = (props) => {
 
     const signUpHandler = (userName,email,password) => {
         signup(userName, email, password).then(result=>{
-            console.log(result)
             if (result.success){
                 navigate('/login');
             }else {

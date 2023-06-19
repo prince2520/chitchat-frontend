@@ -6,19 +6,19 @@ import Overlay from "../../Helper/Overlay/Overlay";
 import {useSelector} from "react-redux";
 import NotSelectedChat from "./NotSelectedChat/NotSelectedChat";
 import {disconnectSocket, initiateSocket} from "../../socket";
-import { useEffect} from "react";
+import {useContext, useEffect} from "react";
+import AuthContext from "../../Context/auth";
 const Chat = () => {
     const showOverlay = useSelector(state => state.overlay?.showOverlay);
     const selectedChatBox = useSelector(state => state.chat.selected);
-    const username = useSelector(state => state.user.username);
-
+    const authCtx = useContext(AuthContext);
 
     useEffect(()=>{
-        initiateSocket(username)
+        initiateSocket(authCtx?.userId);
         return ()=>{
-            disconnectSocket()
+            disconnectSocket(authCtx?.userId)
         }
-    },[username])
+    },[authCtx?.userId])
 
 
 

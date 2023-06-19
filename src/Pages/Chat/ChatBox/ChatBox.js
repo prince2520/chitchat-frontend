@@ -1,6 +1,8 @@
 import ChatBoxTop from "./ChatBoxTop/ChatBoxTop";
 import ChatBoxBottom from "./ChatBoxBottom/ChatBoxBottom";
 
+import React from "react";
+
 import './ChatBox.css';
 import NoMessage from "./NoMessage/NoMessage";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +13,7 @@ import ChatBoxMiddle from "./ChatBoxMiddle/ChatBoxMiddle";
 import AuthContext from "../../../Context/auth";
 import {fetchGroupMessages} from "../../../api";
 import {categoryState} from "../../../common";
+import message from "./ChatBoxMiddle/Message/Message";
 
 const ChatBox = () => {
     const chat = useSelector(state => state.chat);
@@ -22,57 +25,37 @@ const ChatBox = () => {
     }
 
     useEffect(() => {
-        getGroupMessage((err, { messageId, groupId, message, userName, profileImageUrl}) => {
-            console.log({ messageId, groupId, message,userName, profileImageUrl})
-            if(chat._id === groupId){
+        getGroupMessage((err, {messageData}) => {
+            console.log(messageData)
                 let data = {
-                    messageId: messageId,
-                    username: userName,
-                    message: message,
-                    profileImageUrl: profileImageUrl
+                    groupId: messageData.groupId,
+                    messageId: messageData.messageId,
+                    username: messageData.username,
+                    message: messageData.message,
+                    profileImageUrl: messageData.profileImageUrl
                 };
                 saveMessage(data);
-            }
+
         });
-    });
-
-    // useEffect(() => {
-    //     getPrivateMessage((err,{userName, message, profileImageUrl}) => {
-    //         if(chat.name === userName){
-    //             let data = {
-    //                 username: userName,
-    //                 message: message,
-    //                 profileImageUrl: profileImageUrl
-    //             };
-    //             saveMessage(data)
-    //         }
-    //     })
-    // }, [])
+    }, [chat._id]);
 
 
-    useEffect(()=>{
-        if(chat.type === categoryState[0]){
-            joinGroupHandler(chat._id);
+    useEffect(() => {
+        if (chat?.type === categoryState[0]) {
             fetchGroupMessages(chat.name, authCtx?.token)
-                .then((res)=>{
-                    console.log(res.messages)
+                .then((res) => {
                     dispatch(ChatActions.saveFetchChatMessage(res.messages));
                 })
-                .catch(err=>console.log(err));
-
-            return () => {
-                console.log('leave', chat._id);
-                leaveGroupHandler(chat._id)
-            }
+                .catch(err => console.log(err));
         }
-    },[chat._id])
+    }, [chat._id])
 
     return (
         <div className="chat-box">
             <ChatBoxTop/>
-            {(chat.messages.length!==0) ? <ChatBoxMiddle/> : <NoMessage/> }
+            {(chat.messages.length !== 0) ? <ChatBoxMiddle/> : <NoMessage/>}
             <ChatBoxBottom/>
         </div>
     );
 };
-export default ChatBox;
+export default React.memo(ChatBox);

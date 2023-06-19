@@ -8,7 +8,8 @@ const initialChatState = {
     status: '',
     createdBy : '',
     name: '',
-    messages:[]
+    messages:[],
+    users: []
 };
 
 const ChatSlice = createSlice({
@@ -22,15 +23,16 @@ const ChatSlice = createSlice({
             state.name = action.payload.name;
             state.status = action.payload.status ? action.payload.status : null;
             state.createdBy = action.payload.createdBy ? action.payload.createdBy : null;
-            state.messages = action.payload.messages ? action.payload.messages : [];
+            state.users = action.payload.users ? action.payload.users : [];
+            state.messages = [];
             state.selected = true;
         },
         saveChatMessage(state, action){
-            console.log(action.payload)
-            if(!state.messages.find(res=>res.messageId === action.payload.messageId)){
-                state.messages = [action.payload, ...state.messages]
+            if(state._id === action.payload.groupId){
+                if(!state.messages.find(res=>res.messageId === action.payload.messageId)){
+                    state.messages = [action.payload, ...state.messages]
+                }
             }
-
         },
         saveFetchChatMessage(state, action) {
             state.messages = action.payload.reverse()
