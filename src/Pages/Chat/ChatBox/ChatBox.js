@@ -20,25 +20,6 @@ const ChatBox = () => {
     const dispatch = useDispatch();
     const authCtx = useContext(AuthContext);
 
-    const saveMessage = (data) => {
-        dispatch(ChatActions.saveChatMessage(data));
-    }
-
-    useEffect(() => {
-        getGroupMessage((err, {messageData}) => {
-            console.log(messageData)
-                let data = {
-                    groupId: messageData.groupId,
-                    messageId: messageData.messageId,
-                    username: messageData.username,
-                    message: messageData.message,
-                    profileImageUrl: messageData.profileImageUrl
-                };
-                saveMessage(data);
-
-        });
-    }, [chat._id]);
-
 
     useEffect(() => {
         if (chat?.type === categoryState[0]) {

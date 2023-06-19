@@ -3,15 +3,18 @@ import ChatBox from "./ChatBox/ChatBox";
 
 import  './Chat.css';
 import Overlay from "../../Helper/Overlay/Overlay";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import NotSelectedChat from "./NotSelectedChat/NotSelectedChat";
-import {disconnectSocket, initiateSocket} from "../../socket";
+import {disconnectSocket, getGroupMessage, initiateSocket} from "../../socket";
 import {useContext, useEffect} from "react";
 import AuthContext from "../../Context/auth";
+import {ChatActions} from "../../store/chat";
 const Chat = () => {
     const showOverlay = useSelector(state => state.overlay?.showOverlay);
     const selectedChatBox = useSelector(state => state.chat.selected);
     const authCtx = useContext(AuthContext);
+
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         initiateSocket(authCtx?.userId);
@@ -19,6 +22,23 @@ const Chat = () => {
             disconnectSocket(authCtx?.userId)
         }
     },[authCtx?.userId])
+
+    const saveMessage = (data) => {
+        dispatch(ChatActions.saveChatMessage(data));
+    }
+
+    useEffect(() => {
+        getGroupMessage((err, {messageData}) => {
+            let data = {
+                groupId: messageData.groupId,
+                messageId: messageData.messageId,
+                username: messageData.username,
+                message: messageData.message,
+                profileImageUrl: messageData.profileImageUrl
+            };
+            saveMessage(data);
+        });
+    },[]);
 
 
 

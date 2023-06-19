@@ -29,9 +29,7 @@ const ChatSlice = createSlice({
         },
         saveChatMessage(state, action){
             if(state._id === action.payload.groupId){
-                if(!state.messages.find(res=>res.messageId === action.payload.messageId)){
                     state.messages = [action.payload, ...state.messages]
-                }
             }
         },
         saveFetchChatMessage(state, action) {
