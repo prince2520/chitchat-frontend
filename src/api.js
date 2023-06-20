@@ -98,7 +98,6 @@ export const fetchPrivateUserHandler = async (userId, token) => {
     return result.json();
 }
 
-
 export const addUserInPrivateChat = async (token, senderId, receiverId) => {
     const response  = await fetch(`${process.env.REACT_APP_SERVER_URL}/private/addPrivateChat`,{
         method: 'POST',
@@ -118,7 +117,7 @@ export const addUserInPrivateChat = async (token, senderId, receiverId) => {
 
 
 export const joinGroupHandler = async (token, group_name, userId) => {
-    let result = fetch(`${process.env.REACT_APP_SERVER_URL}/group/joinGroup`,{
+    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/group/joinGroup`,{
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
@@ -159,16 +158,27 @@ export const fetchGroupMessages = async (groupName, token) => {
     return res.json();
 }
 
-export const sendPrivateMessageHandler = async (token, sender, receiver, message) => {
-    let result = await fetch(`${process.env.REACT_APP_SERVER_URL}/private/createPersonalMessage`, {
+
+export const fetchPrivateMessage = async (senderId, receiverId, token) => {
+    const fetchMessage =
+        await fetch(`${process.env.REACT_APP_SERVER_URL}/private/fetchPrivateMessage?senderId=${senderId}&receiverId=${receiverId}`, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+    return fetchMessage.json();
+};
+
+export const sendPrivateMessageHandler = async (token, senderId, receiverId, message) => {
+    let result =  await fetch(`${process.env.REACT_APP_SERVER_URL}/private/sendPrivateMessage`, {
         method: 'POST',
         headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            senderName: sender,
-            receiverName: receiver,
+            senderId: senderId,
+            receiverId: receiverId,
             message: message
         })
     });

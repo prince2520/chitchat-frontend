@@ -3,7 +3,7 @@ import { useNavigate} from "react-router-dom";
 import {fetchUser, login, signup} from "../api";
 import {useDispatch} from "react-redux";
 import {AlertBoxActions} from "../store/alert";
-import {AuthActions} from "../store/user";
+import {UserActions} from "../store/user";
 
 
 const AuthContext = React.createContext({
@@ -24,8 +24,7 @@ export const AuthContextProvider = (props) => {
     const dispatch = useDispatch();
 
     const saveUserData = (result) =>{
-        console.log(result)
-        dispatch(AuthActions.saveUserData({
+        dispatch(UserActions.saveUserData({
             username: result.userName,
             email: result.email,
             profileImageUrl: result.profileImageUrl,
@@ -95,7 +94,7 @@ export const AuthContextProvider = (props) => {
 
                 navigate('/chat');
             }else{
-                dispatch(AlertBoxActions.showAlertBoxHandler())
+                dispatch(AlertBoxActions.showAlertBoxHandler(result))
             }
         });
     }

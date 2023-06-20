@@ -6,7 +6,7 @@ import {Icon} from "@iconify/react";
 import {useDispatch, useSelector} from "react-redux";
 import {useContext, useEffect, useRef, useState} from "react";
 import AuthContext from "../../../../Context/auth";
-import {AuthActions} from "../../../../store/user";
+import {UserActions} from "../../../../store/user";
 import {saveProfile} from "../../../../api";
 import {compressImageHandler, saveImageIntoFirebase} from "../../common_function";
 
@@ -48,7 +48,7 @@ const EditProfile = () => {
         let firebaseUrl = await saveImageIntoFirebase(profileImage)
 
         saveProfileBackend(username, status, firebaseUrl).then(() => {
-            dispatch(AuthActions.saveUserData({
+            dispatch(UserActions.saveUserData({
                 username: username,
                 status: status,
                 profileImageUrl: firebaseUrl

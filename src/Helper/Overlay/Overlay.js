@@ -1,6 +1,5 @@
 import './Overlay.css';
 import Model from "./Model/Model";
-import ChatTab from "../../Pages/Chat/ChatTab/ChatTab";
 import {Icon} from "@iconify/react";
 import {useDispatch} from "react-redux";
 import {OverlayActions} from "../../store/overlay";

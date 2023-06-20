@@ -29,9 +29,9 @@ const Chat = () => {
 
     useEffect(() => {
         getGroupMessage((err, {messageData}) => {
+            console.log(messageData);
             let data = {
-                groupId: messageData.groupId,
-                messageId: messageData.messageId,
+                chatId: messageData.chatId,
                 username: messageData.username,
                 message: messageData.message,
                 profileImageUrl: messageData.profileImageUrl

@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 let socket;
 
 export const initiateSocket = (userId) => {
-    socket = io(process.env.REACT_APP_SERVER_URL, {transports: ['websocket', 'polling', 'flashsocket']});
+    socket = io(process.env.REACT_APP_SERVER_URL, {transports: ['websocket']});
     socket.emit('user_connected', userId);
 }
 
@@ -13,15 +13,14 @@ export const joinGroupHandler = (groupId) => {
     }
 }
 
-
 export  const  leaveGroupHandler = (groupId) => {
     if(socket && groupId){
         socket.emit('leave_room', {groupId});
     }
 }
-export const sendGroupMessage = (groupData) => {
+export const sendChatMessageHandler = (data) => {
     if(socket){
-        socket.emit('send_group_message',{groupData});
+        socket.emit('send_message',{data});
     }
 };
 
@@ -49,7 +48,8 @@ export const getGroupMessage = (cb) => {
     if(!socket){
         return true
     }else{
-        socket.on('received_group_message',({messageData})=>{
+        socket.on("received_message",({messageData})=>{
+            console.log('Joker')
             return cb(null,{messageData})
         })
     };

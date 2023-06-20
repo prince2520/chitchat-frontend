@@ -7,7 +7,9 @@ import {compressImageHandler, saveImageIntoFirebase} from "../../common_function
 import {useContext, useEffect, useRef, useState} from "react";
 import {createGroup} from "../../../../api";
 import AuthContext from "../../../../Context/auth";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {UserActions} from "../../../../store/user";
+import {useNavigate} from "react-router-dom";
 
 const CreateGroup = () => {
     const imageRef = useRef();
@@ -15,6 +17,9 @@ const CreateGroup = () => {
     const [groupImage, setGroupImage] = useState(null);
     const authData = useSelector(state => state.user);
     const authCtx = useContext(AuthContext);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (groupImage) {
@@ -32,8 +37,11 @@ const CreateGroup = () => {
     const createGroupHandler = async (groupName, groupImg) => {
         let firebaseUrl = await saveImageIntoFirebase(groupImg)
 
-        createGroup(authCtx.token, groupName, authData.username, authCtx.userId, firebaseUrl).then((res) => {
-            console.log('create group', res);
+        createGroup(authCtx?.token, groupName, authData.username, authCtx?.userId, firebaseUrl).then((res) => {
+            if(res.success){
+                dispatch(UserActions.addGroupHandler(res.groupData));
+                navigate('/chat');
+            }
         }).catch(err=>console.log(err));
     };
 

@@ -3,10 +3,10 @@ import {Icon} from "@iconify/react";
 import {useContext, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {categoryState} from "../../../../common";
-import {sendGroupMessage} from "../../../../socket";
 import {ChatActions} from "../../../../store/chat";
-import {sendGroupMessageHandler} from "../../../../api";
+import {sendGroupMessageHandler, sendPrivateMessage, sendPrivateMessageHandler} from "../../../../api";
 import AuthContext from "../../../../Context/auth";
+import {sendChatMessageHandler} from "../../../../socket";
 
 const ChatBoxBottom = () => {
     const inputRef = useRef(null);
@@ -18,41 +18,50 @@ const ChatBoxBottom = () => {
 
     const dispatch = useDispatch();
 
+    const sendMessageHandler = (message, users, chatId , cb) => {
+        let data;
+
+        data = {
+            sender_id : authCtx?.userId,
+            users: users,
+
+            messageData: {
+                chatId: chatId,
+                username: user.username,
+                message: message,
+                profileImageUrl: user.profileImageUrl
+            }
+        }
+        dispatch(ChatActions.saveChatMessage({
+            chatId: chat._id,
+            username: user.username,
+            message: message,
+            profileImageUrl: user.profileImageUrl
+        }));
+
+        cb(data);
+    }
+
     const sendMessage = (event) => {
         event.preventDefault();
         let message = inputRef.current.value;
 
         if (chat.type === categoryState[0]) {
             sendGroupMessageHandler(authCtx.token, message, chat.name, user.username)
-                .then((res)=>{
-                    let users, groupData;
+                .then(()=>{
+                    let users = chat.users;
 
-                    users = chat.users;
-                    groupData = {
-                        sender_id : authCtx?.userId,
-                        users: users,
-
-                        messageData: {
-                            messageId: res.result._id,
-                            groupId: chat._id,
-                            username: user.username,
-                            message: message,
-                            profileImageUrl: user.profileImageUrl
-                        }
-                    }
-                    dispatch(ChatActions.saveChatMessage({
-                        groupId: chat._id,
-                        messageId:  res.result._id,
-                        username: user.username,
-                        message: message,
-                        profileImageUrl: user.profileImageUrl
-                    }));
-                    sendGroupMessage(groupData);
+                    sendMessageHandler(message, users, chat._id ,sendChatMessageHandler);
                 })
                 .catch(err=>console.log(err));
-
-
+        }else {
+            sendPrivateMessageHandler(authCtx.token, authCtx.userId, chat._id, message)
+                .then(()=>{
+                    let users = [authCtx.userId, chat._id];
+                    sendMessageHandler(message, users, authCtx.userId,sendChatMessageHandler);
+                }).catch(err=>console.log(err));
         }
+
         inputRef.current.value = '';
     };
 

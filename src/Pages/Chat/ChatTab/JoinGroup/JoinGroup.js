@@ -4,10 +4,14 @@ import CustomInput from "../../../../Helper/CustomInput/CustomInput";
 import {joinGroupHandler} from "../../../../api";
 import {useContext} from "react";
 import AuthContext from "../../../../Context/auth";
-import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {UserActions} from "../../../../store/user";
+import {useNavigate} from "react-router-dom";
 
 const JoinGroup = () => {
     const authCtx = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -15,7 +19,12 @@ const JoinGroup = () => {
         let group_name = event.target[0].value;
 
         joinGroupHandler(authCtx?.token, group_name, authCtx?.userId)
-            .then(res=>console.log(res))
+            .then(res=>{
+                if(res.success){
+                    dispatch(UserActions.addGroupHandler(res.groupData));
+                    navigate('/chat');
+                }
+            })
             .catch(err=>console.log(err));
     }
 

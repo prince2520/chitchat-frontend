@@ -17,6 +17,8 @@ const AlertBoxSlice = createSlice({
         },
         closeAlertBoxHandler(state){
             state.showAlertBox = false;
+            state.success = '';
+            state.message = '';
         }
     }
 });

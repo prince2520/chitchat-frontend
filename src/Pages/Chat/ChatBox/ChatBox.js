@@ -7,13 +7,11 @@ import './ChatBox.css';
 import NoMessage from "./NoMessage/NoMessage";
 import {useDispatch, useSelector} from "react-redux";
 import {useContext, useEffect} from "react";
-import {getGroupMessage, joinGroupHandler, leaveGroupHandler} from "../../../socket";
 import {ChatActions} from "../../../store/chat";
 import ChatBoxMiddle from "./ChatBoxMiddle/ChatBoxMiddle";
 import AuthContext from "../../../Context/auth";
-import {fetchGroupMessages} from "../../../api";
+import {fetchGroupMessages, fetchPrivateMessage} from "../../../api";
 import {categoryState} from "../../../common";
-import message from "./ChatBoxMiddle/Message/Message";
 
 const ChatBox = () => {
     const chat = useSelector(state => state.chat);
@@ -25,7 +23,17 @@ const ChatBox = () => {
         if (chat?.type === categoryState[0]) {
             fetchGroupMessages(chat.name, authCtx?.token)
                 .then((res) => {
-                    dispatch(ChatActions.saveFetchChatMessage(res.messages));
+                    if(res.success){
+                        dispatch(ChatActions.saveFetchChatMessage(res.messages));
+                    }
+                })
+                .catch(err => console.log(err));
+        }else {
+            fetchPrivateMessage(authCtx?.userId, chat._id, authCtx?.token)
+                .then((res) => {
+                    if(res.success){
+                        dispatch(ChatActions.saveFetchChatMessage(res.messages));
+                    }
                 })
                 .catch(err => console.log(err));
         }

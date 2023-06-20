@@ -1,5 +1,7 @@
 import {useSelector} from "react-redux";
 
+import './AlertBox.css'
+
 const AlertBox = () => {
     const alertBoxData = useSelector(state => state.alert);
 

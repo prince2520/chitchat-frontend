@@ -20,9 +20,12 @@ const UserSlice = createSlice({
             state.profileImageUrl = action.payload.profileImageUrl ? action.payload.profileImageUrl : state.profileImageUrl ;
             state.groupList = action.payload.groupList ? action.payload.groupList : state.groupList ;
             state.privateList = action.payload.privateList ? action.payload.privateList : state.privateList;
+        },
+        addGroupHandler(state, action){
+            state.groupList = [...state.groupList, action.payload];
         }
     }
 });
 
-export const AuthActions = UserSlice.actions;
+export const UserActions = UserSlice.actions;
 export default UserSlice.reducer;

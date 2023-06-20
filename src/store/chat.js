@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {categoryState} from "../common";
 
 const initialChatState = {
     selected: false,
@@ -6,9 +7,9 @@ const initialChatState = {
     _id: '',
     photo: '',
     status: '',
-    createdBy : '',
+    createdBy: '',
     name: '',
-    messages:[],
+    messages: [],
     users: []
 };
 
@@ -16,7 +17,7 @@ const ChatSlice = createSlice({
     name: 'chat',
     initialState: initialChatState,
     reducers: {
-        selectedChatBox (state, action){
+        selectedChatBox(state, action) {
             state.type = action.payload.type;
             state._id = action.payload._id;
             state.photo = action.payload.photo;
@@ -27,9 +28,9 @@ const ChatSlice = createSlice({
             state.messages = [];
             state.selected = true;
         },
-        saveChatMessage(state, action){
-            if(state._id === action.payload.groupId){
-                    state.messages = [action.payload, ...state.messages]
+        saveChatMessage(state, action) {
+            if (state._id === action.payload.chatId) {
+                state.messages = [action.payload, ...state.messages]
             }
         },
         saveFetchChatMessage(state, action) {
